@@ -1,0 +1,163 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body { 
+  width: 100%;
+  height: 100vh;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
+
+footer {
+  width: 100%;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  background-color: #000;
+  text-align: center;
+  justify-content: space-around;
+  color: #FFF;
+}
+
+footer a{
+  color: #000;
+  background-color: #FFF;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  text-decoration: none;
+  border-radius: 12px;
+}
+
+footer a i {
+  font-size: 30px;
+  margin: auto;
+}
+
+#todoapp {
+  display: flex;
+  flex-direction: column; 
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  min-height: 500px;
+}
+
+#todoapp header {
+  display: flex;
+  width: 100%;
+  min-height: 55px;
+  align-items: center;
+  background-color: #FFF;
+  text-align: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 10px 0 30px 0;
+}
+
+#todoapp header h1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  min-width: 250px;
+}
+
+#todoapp header input {
+  min-width: 400px;
+  height:30px;
+  padding: 5px;
+  order: 3;
+}
+
+#todoapp header div {
+  min-width: 350px;
+  height:30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#todoapp header div a {
+  color: #FFF;
+  background-color: #000;
+  text-decoration: none;
+  border-radius: 12px;
+  padding: 8px 12px;
+}
+
+#todoapp section#main {
+  height: 100%;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+}
+
+#todoapp ul {
+  list-style-type: none;
+  width: 100%;
+  padding: 30px;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#todoapp ul li {
+  height: 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #000;
+}
+
+#todoapp ul li div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  max-width: 800px;
+}
+
+#todoapp ul li div button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+  background-color: #FF3355;
+  border: none;
+  border-radius: 8px;
+}
+
+#todoapp ul li div button:hover{
+  cursor: pointer;
+  border: 2px solid #000;;
+}
+
+#todoapp ul li div button i {
+  font-size: 20px;
+  margin: auto;
+}
+
+#todo-list input.edit {
+  display: none;
+  height:30px;
+  padding: 5px;
+}
+#todo-list .editing label {
+  display: none;
+}    
+#todo-list .editing input.edit {
+  display: inline;
+}    
