@@ -1,4 +1,4 @@
-var app = {}; // create namespace for our app
+var app = {}; // criar namespaces para o app
 
 //--------------
 // Models
@@ -11,14 +11,14 @@ app.Todo = Backbone.Model.extend({
   toggle: function(){
     this.save({ completed: !this.get('completed')});
   }
-});
+}); // Modelo de uma tarefa
 
 //--------------
 // Collections
 //--------------
 app.TodoList = Backbone.Collection.extend({
-  model: app.Todo,
-  localStorage: new Store("backbone-todo"),
+  model: app.Todo, //Modelo referente
+  localStorage: new Store("backbone-todo"), // Estancia do localstorage
   completed: function() {
     return this.filter(function( todo ) {
       return todo.get('completed');
@@ -27,29 +27,29 @@ app.TodoList = Backbone.Collection.extend({
   remaining: function() {
     return this.without.apply( this, this.completed() );
   }      
-});
+}); //Coleção
 
-// instance of the Collection
+// instancia da Collection
 app.todoList = new app.TodoList();
 
 //--------------
 // Views
 //--------------
 
-// renders individual todo items list (li)
+// renderiza a lista de itens de tarefas individuais (li)
 app.TodoView = Backbone.View.extend({
-  tagName: 'li',
-  template: _.template($('#item-template').html()),
+  tagName: 'li', //Tag HTML
+  template: _.template($('#item-template').html()), //Utilizando função da biblioteca underscore
   render: function(){
     this.$el.html(this.template(this.model.toJSON()));
     this.input = this.$('.edit');
-    return this; // enable chained calls
+    return this; // habilitar chamadas encadeadas
   },
   initialize: function(){
     this.model.on('change', this.render, this);
-    this.model.on('destroy', this.remove, this); // remove: Convenience Backbone's function for removing the view from the DOM.
+    this.model.on('destroy', this.remove, this); // remove: Função do Backbone de conveniência para remover a visualização do DOM.
   },      
-  events: {
+  events: { //lista de eventos presentes na aplicação
     'dblclick label' : 'edit',
     'keypress .edit' : 'updateOnEnter',
     'blur .edit' : 'close',
@@ -59,18 +59,18 @@ app.TodoView = Backbone.View.extend({
   edit: function(){
     this.$el.addClass('editing');
     this.input.focus();
-  },
+  }, // Função para adicionar a classe editing em uma tarefa
   close: function(){
     var value = this.input.val().trim();
     if(value) {
       this.model.save({title: value});
     }
     this.$el.removeClass('editing');
-  },
+  }, // Salva a edição
   updateOnEnter: function(e){
     if(e.which == 13){
       this.close();
-    }
+    } //Faz a verificação se o enter foi precionado
   },
   toggleCompleted: function(){
     this.model.toggle();
@@ -80,40 +80,40 @@ app.TodoView = Backbone.View.extend({
   }      
 });
 
-// renders the full list of todo items calling TodoView for each one.
+// renderiza a lista completa de itens de tarefas chamando TodoView para cada um.
 app.AppView = Backbone.View.extend({
-  el: '#todoapp',
+  el: '#todoapp', // seleciona o elemento HTML por ID
   initialize: function () {
-    this.input = this.$('#new-todo');
+    this.input = this.$('#new-todo'); // Seleciona o input de nova task
     app.todoList.on('add', this.addAll, this);
     app.todoList.on('reset', this.addAll, this);
-    app.todoList.fetch(); // Loads list from local storage
+    app.todoList.fetch(); // Carega a lista do LocalStorage
   },
-  events: {
+  events: { // Eventos da View
     'keypress #new-todo': 'createTodoOnEnter'
   },
   createTodoOnEnter: function(e){
-    if ( e.which !== 13 || !this.input.val().trim() ) { // ENTER_KEY = 13
+    if ( e.which !== 13 || !this.input.val().trim() ) { // ENTER_KEY = 13 Verifica se foi precionado o Enter para salvar uma nova tarefa
       return;
     }
     app.todoList.create(this.newAttributes());
-    this.input.val(''); // clean input box
+    this.input.val(''); // limpa o input box
   },
-  addOne: function(todo){
+  addOne: function(todo){ // Adiciona um novo item
     var view = new app.TodoView({model: todo});
     $('#todo-list').append(view.render().el);
   },
   addAll: function(){
-    this.$('#todo-list').html(''); // clean the todo list
-    // filter todo item list
-    switch(window.filter){
-      case 'pending':
+    this.$('#todo-list').html(''); // limpar a lista de tarefas
+    // filtrar lista de itens de tarefas
+    switch(window.filter){ //Verifica qual é o filtro da url
+      case 'pending': // Mostra somente as tarefas pendentes
         _.each(app.todoList.remaining(), this.addOne);
         break;
-      case 'completed':
+      case 'completed': // Mostra somente as tarefas completas
         _.each(app.todoList.completed(), this.addOne);
         break;            
-      default:
+      default: // Por default mostra todas as tarefas
         app.todoList.each(this.addOne, this);
         break;
     }
@@ -130,11 +130,11 @@ app.AppView = Backbone.View.extend({
 // Routers
 //--------------
 
-app.Router = Backbone.Router.extend({
+app.Router = Backbone.Router.extend({ //Uma rota que recebe os parametros ou completed ou pending
   routes: {
     '*filter' : 'setFilter'
   },
-  setFilter: function(params) {
+  setFilter: function(params) { //Pega o parametro da Rota e seta como filtro
     console.log('app.router.params = ' + params);
     window.filter = params.trim() || '';
     app.todoList.trigger('reset');
@@ -147,4 +147,4 @@ app.Router = Backbone.Router.extend({
 
 app.router = new app.Router();
 Backbone.history.start();    
-app.appView = new app.AppView(); 
+app.appView = new app.AppView();

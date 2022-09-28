@@ -8,17 +8,17 @@
   </head>
   <body>
 
-    <section id="todoapp">
+    <section id="todoapp"> <!--Container principal-->
       <header id="header">
         <h1><i class="ph-list"></i> Lista de Tarefas</h1>
-        <input id="new-todo" placeholder="Tarefa a fazer:" autofocus>
-        <div>
+        <input id="new-todo" placeholder="Tarefa a fazer:" autofocus> <!-- Input de novas tarefas -->
+        <div> <!-- Lista de filtros -->
           <a href="#/">Ver Tudo</a>
           <a href="#/pending">Ver Pendentes</a> 
           <a href="#/completed">Ver completas</a>
         </div>      
       </header>
-      <section id="main">
+      <section id="main"> <!-- Container para renderização da view de itens -->
         <ul id="todo-list"></ul>
       </section>
     </section>
@@ -27,7 +27,7 @@
       <a href="https://github.com/GUIHUFF/backbonejs"><i class="ph-github-logo"></i></a>
     </footer>  
   
-    <!-- Templates -->
+    <!-- Templates dos itens -->
     <script type="text/template" id="item-template">
       <div class="view">
         <input class="toggle" type="checkbox" <%= completed ? 'checked' : '' %>>
